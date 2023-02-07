@@ -15,7 +15,7 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebFilter({"/carro/*"})
+@WebFilter({"/carro/*", "/productos/form/*", "/productos/eliminar/*"})
 public class LoginFiltro implements Filter{
 
 	@Override

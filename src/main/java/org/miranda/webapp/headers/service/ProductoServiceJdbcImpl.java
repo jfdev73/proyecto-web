@@ -7,13 +7,14 @@ import java.util.Optional;
 
 import org.miranda.webapp.headers.exceptions.ServiceJdbcException;
 import org.miranda.webapp.headers.models.Producto;
+import org.miranda.webapp.headers.repository.GenericRepository;
 import org.miranda.webapp.headers.repository.ProductoRepositoryJdbcImpl;
 
 
 
 public class ProductoServiceJdbcImpl implements ProductoService {
 	
-	private ProductoRepositoryJdbcImpl repositoryJDBC;
+	private GenericRepository<Producto, Long> repositoryJDBC;
 
 	public ProductoServiceJdbcImpl(Connection conn) {
 		this.repositoryJDBC = new ProductoRepositoryJdbcImpl(conn);
@@ -36,6 +37,26 @@ public class ProductoServiceJdbcImpl implements ProductoService {
 		} catch (SQLException e) {
 			throw new ServiceJdbcException(e.getMessage(), e.getCause());
 		}
+	}
+
+	@Override
+	public void save(Producto producto) {
+		try {
+			repositoryJDBC.save(producto);
+		} catch (SQLException e) {
+			throw new ServiceJdbcException(e.getMessage(), e.getCause());
+		}
+		
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		try {
+			repositoryJDBC.delete(id);
+		} catch (SQLException e) {
+			throw new ServiceJdbcException(e.getMessage(), e.getCause());
+		}
+		
 	}
 
 }

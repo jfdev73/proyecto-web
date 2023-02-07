@@ -1,18 +1,29 @@
 package org.miranda.webapp.headers.models;
 
+import java.time.LocalDate;
+
+
 public class Producto {
 	private Long id;
 	private String nombre;
-	private String tipo;
-	private int precio;
+	private Categoria categoria;
+	private Integer precio;
+	private String sku;
+	private LocalDate fechaRegistro;
 
 	public Producto() {
+		this.nombre = "";
+		this.categoria = new Categoria();
+		//this.precio= 0;
+		this.sku = "";
 	}
 
-	public Producto(Long id, String nombre, String tipo, int precio) {
+	public Producto(Long id, String nombre, String categoria, int precio) {
 		this.id = id;
 		this.nombre = nombre;
-		this.tipo = tipo;
+		Categoria c = new Categoria();
+		c.setCategoria(categoria);
+		this.categoria = c;
 		this.precio = precio;
 	}
 
@@ -32,20 +43,45 @@ public class Producto {
 		this.nombre = nombre;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public Categoria getCategoria() {
+		return categoria;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
-	public int getPrecio() {
+	public Integer getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(int precio) {
+	public void setPrecio(Integer precio) {
 		this.precio = precio;
 	}
 
+	public String getSku() {
+		return sku;
+	}
+
+	public void setSku(String sku) {
+		this.sku = sku;
+	}
+
+	public LocalDate getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+	public void setFechaRegistro(LocalDate fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
+
+	@Override
+	public String toString() {
+		return "Producto [id=" + id + ", nombre=" + nombre + ", categoria=" + categoria + ", precio=" + precio
+				+ ", sku=" + sku + ", fechaRegistro=" + fechaRegistro + "]";
+	}
+	
+	
+
+	
 }

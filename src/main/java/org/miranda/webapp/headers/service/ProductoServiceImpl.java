@@ -23,4 +23,16 @@ public class ProductoServiceImpl implements ProductoService {
 		return listar().stream().filter(p -> p.getId().equals(id)).findAny();
 	}
 
+	@Override
+	public void save(Producto producto) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
