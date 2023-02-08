@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="java.util.*, org.miranda.webapp.headers.models.*"%>
-<%
-List<Producto> productos = (List<Producto>) request.getAttribute("productos");
-Optional<String> username = (Optional<String>) request.getAttribute("username");
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,63 +11,49 @@ Optional<String> username = (Optional<String>) request.getAttribute("username");
 </head>
 <body>
 	<h1>Listado de productos</h1>
-	<%
-	if (username.isPresent()) {
-	%>
+	<c:if test="${username.isPresent()}">
 	<div>
 		Hola
-		<%=username.get()%>, bienvenido!
+		<c:out 	value="${username.get()}" />, bienvenido!
 	</div>
 	<div>
 		<p>
-			<a href="<%=request.getContextPath()%>/productos/form">Crear[+]</a>
+			<a href="<c:out value="${pageContext.request.contextPath }" />/productos/form">Crear[+]</a>
 		</p>
 	</div>
-	<%
-	}
-	%>
+	</c:if>
 	<table>
 		<tr>
 			<th>Id</th>
 			<th>Nombre</th>
 			<th>Categoria</th>
-			<%
-			if (username.isPresent()) {
-			%>
+			<c:if test="${username.present}">
 			<th>Precio</th>
 			<th>Agregar</th>
-			<%
-			}
-			%>
-
+			<th></th>
+			<th></th>
+			</c:if>
 
 		</tr>
-		<%
-		for (Producto p : productos) {
-		%>
+		
+		<c:forEach items= "${productos }" var="p">
 		<tr>
 
-			<td><%=p.getId()%></td>
-			<td><%=p.getNombre()%></td>
-			<td><%=p.getCategoria().getCategoria()%></td>
-			<%
-			if (username.isPresent()) {
-			%>
-			<td><%=p.getPrecio()%></td>
+			<td>${p.id }</td>
+			<td>${p.nombre }</td>
+			<td>${p.categoria.categoria }</td>
+			<c:if test="${username.present}">
+			<td>${p.precio }</td>
 			<td><a
-				href="<%=request.getContextPath()%>/carro/agregar?id=<%=p.getId()%> ">Agregar
+				href="${pageContext.request.contextPath }/carro/agregar?id=${p.id }">Agregar
 					al carro</a></td>
 			<td><a
-				href="<%=request.getContextPath()%>/productos/form?id=<%=p.getId()%> ">Editar</a></td>
+				href="${pageContext.request.contextPath }/productos/form?id=${p.id } ">Editar</a></td>
 				<td><a onclick="return confirm('esta seguro que desea eliminar?');"
-        href="<%=request.getContextPath()%>/productos/eliminar?id=<%=p.getId()%>">eliminar</a></td>
-			<%
-			}
-			%>
+        href="${pageContext.request.contextPath }/productos/eliminar?id=<c:out value="${p.id }" />">eliminar</a></td>
+			</c:if>
 		</tr>
-		<%
-		}
-		%>
+		</c:forEach>
 	</table>
 </body>
 </html>

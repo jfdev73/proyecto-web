@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="org.miranda.webapp.headers.models.*"%>
-<%
-Carro carro = (Carro) session.getAttribute("carro");
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,15 +11,16 @@ Carro carro = (Carro) session.getAttribute("carro");
 <body>
 	<h1>Carro de compras</h1>
 
-	<%
-	if (carro == null || carro.getItems().isEmpty()) {
-	%>
+	<c:if test="${sessionScope.carro == null || sessionScope.carro.items.isEmpty()}">
 	<p>Lo sentimos no hay productos en el carro de compras !</p>
-	<%
-	} else {
-	%>
+	</c:if>
+	
+	
+	<c:if test="${sessionScope.carro != null && !sessionScope.carro.items.isEmpty()}">
+	<p>Lo sentimos no hay productos en el carro de compras !</p>
+	
 	<form name="formcarro"
-		action="<%=request.getContextPath()%>/carro/actualizar" method="post">
+		action="${pageContext.request.contextPath }/carro/actualizar" method="post">
 		<table>
 			<thead>
 				<tr>
@@ -33,35 +32,29 @@ Carro carro = (Carro) session.getAttribute("carro");
 					<th>Borrar</th>
 				</tr>
 			</thead>
-			<%
-			for (ItemCarro item : carro.getItems()) {
-			%>
+			<c:forEach items="${sessionScope.carro.items }" var="item">
 			<tbody>
 				<tr>
-					<td><%=item.getProducto().getId()%></td>
-					<td><%=item.getProducto().getNombre()%></td>
-					<td><%=item.getProducto().getPrecio()%></td>
+					<td>${ item.producto.id}</td>
+					<td>${ item.producto.nombre}</td>
+					<td>${ item.producto.precio}</td>
 					<td><input type="number" size="4"
-							name="cant_<%=item.getProducto().getId()%>"
-							value="<%=item.getCantidad()%>" /></td>
-					<td><%=item.getImporte()%></td>
+							name="cant_${ item.producto.id}"
+							value="${ item.cantidad}" /></td>
+					<td>${ item.importe}</td>
 					<td><input type="checkbox"
-							value="<%=item.getProducto().getId()%>" name="deleteProductos" /></td>
+							value="${ item.producto.id}" name="deleteProductos" /></td>
 				</tr>
-				<%
-				}
-				%>
+				</c:forEach>
 				<tr>
 					<td colspan="4" style="text-align: right;">Total:</td>
-					<td><%=carro.getTotal()%></td>
+					<td>${sessionScope.carro.total}</td>
 				</tr>
 			</tbody>
 		</table>
 		<a href="javascript:document.formcarro.submit();">Actualizar</a>
 	</form>
-	<%
-	}
-	%>
+	</c:if>
 	<p>
 		<a href="<%=request.getContextPath()%>/productos">Seguir Comprando</a>
 	</p>
