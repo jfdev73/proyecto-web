@@ -2,27 +2,21 @@
 	pageEncoding="UTF-8"
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Carro de Compras</title>
-</head>
-<body>
+<jsp:include page="layout/header.jsp" />
+
 	<h1>Carro de compras</h1>
 
 	<c:if test="${sessionScope.carro == null || sessionScope.carro.items.isEmpty()}">
-	<p>Lo sentimos no hay productos en el carro de compras !</p>
+	<div class="alert alert-warning">Lo sentimos no hay productos en el carro de compras !</div>
 	</c:if>
 	
 	
 	<c:if test="${sessionScope.carro != null && !sessionScope.carro.items.isEmpty()}">
-	<p>Lo sentimos no hay productos en el carro de compras !</p>
 	
 	<form name="formcarro"
 		action="${pageContext.request.contextPath }/carro/actualizar" method="post">
-		<table>
-			<thead>
+		<table class="table table-hover table-striped">
+			<thead class="text-center">
 				<tr>
 					<th>Id</th>
 					<th>Nombre</th>
@@ -33,12 +27,12 @@
 				</tr>
 			</thead>
 			<c:forEach items="${sessionScope.carro.items }" var="item">
-			<tbody>
+			<tbody class="text-center">
 				<tr>
 					<td>${ item.producto.id}</td>
 					<td>${ item.producto.nombre}</td>
 					<td>${ item.producto.precio}</td>
-					<td><input type="number" size="4"
+					<td><input type="number" style="width: 70px;"
 							name="cant_${ item.producto.id}"
 							value="${ item.cantidad}" /></td>
 					<td>${ item.importe}</td>
@@ -47,19 +41,16 @@
 				</tr>
 				</c:forEach>
 				<tr>
-					<td colspan="4" style="text-align: right;">Total:</td>
+					<td colspan="5" style="text-align: right;">Total:</td>
 					<td>${sessionScope.carro.total}</td>
 				</tr>
 			</tbody>
 		</table>
-		<a href="javascript:document.formcarro.submit();">Actualizar</a>
+		<div> <a class="btn btn-primary" href="javascript:document.formcarro.submit();">Actualizar</a></div>
 	</form>
 	</c:if>
-	<p>
-		<a href="<%=request.getContextPath()%>/productos">Seguir Comprando</a>
-	</p>
-	<p>
-		<a href="<%=request.getContextPath()%>/home.html">Volver</a>
-	</p>
-</body>
-</html>
+	<div class="mt-2">
+		<a  class="btn btn-sm btn-secondary"href="<%=request.getContextPath()%>/index.jsp">Volver</a>
+		<a  class="btn btn-sm btn-success" href="<%=request.getContextPath()%>/productos">Seguir Comprando</a>
+	</div>
+<jsp:include page="layout/footer.jsp" />

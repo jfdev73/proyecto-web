@@ -42,6 +42,7 @@ public class ProductoFormServlet extends HttpServlet {
 		}
 		request.setAttribute("categorias", categorias);
 		request.setAttribute("producto", producto);
+		request.setAttribute("title", "Formulario de productos");
 		request.getRequestDispatcher("/form.jsp").forward(request, response);
 	}
 
@@ -122,6 +123,7 @@ public class ProductoFormServlet extends HttpServlet {
 			request.setAttribute("errores", errores);
 			request.setAttribute("categorias", serviceCategoria.listar());
 			request.setAttribute("producto", producto);
+			request.setAttribute("title", "Formulario de productos");
 			request.getRequestDispatcher("/form.jsp").forward(request, response);
 			
 		}

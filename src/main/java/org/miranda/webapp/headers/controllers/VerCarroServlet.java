@@ -12,7 +12,8 @@ import jakarta.servlet.http.HttpServletResponse;
 public class VerCarroServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/carro.jsp").forward(req, resp);
+    	req.setAttribute("title", "Carro de Compras");
+    	getServletContext().getRequestDispatcher("/carro.jsp").forward(req, resp);
     }
 }
 
